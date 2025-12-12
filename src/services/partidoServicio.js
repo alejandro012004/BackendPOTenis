@@ -36,16 +36,15 @@ const obtenerConfiguracionPartidoActual = () => {
 };
 
 const obtenerPartidosFuturos = () => {
-    return [
-        { 
-            id: "p001_futuro", 
-            torneo: "Torneo de Prueba", 
-            ronda: "Cuartos", 
-            fecha: new Date().toISOString(),
-            jugador1: { id: "jA", nombre: "Nadal" },
-            jugador2: { id: "jB", nombre: "Federer" },
-        }
-    ];
+    try {
+        const partidosFuturos = DB.partidosFuturos || [];
+        return partidosFuturos;
+    } catch (error) {
+        throw { 
+            status: 500, 
+            message: "Error al leer los partidos futuros de la base de datos."
+        };
+    }
 };
 
 const guardarResultadoFinal = (datosPartidoFinal) => {
