@@ -4,6 +4,7 @@ const partidoControlador = require("../../controlador/partidoControlador");
 
 router.get("/actual", partidoControlador.obtenerPartidoActual);
 router.post("/guardar", partidoControlador.guardarPartido);
+router.get("/proximos", partidoControlador.obtenerPartidosFuturos);
 
 router.get("/admin/jugadores", partidoControlador.obtenerJugadores);
 router.patch("/admin/jugadores/:id", partidoControlador.actualizarDatosJugador);

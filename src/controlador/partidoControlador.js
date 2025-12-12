@@ -19,6 +19,21 @@ const guardarPartido = (req, res) => {
     }
 };
 
+const obtenerPartidosFuturos = (req, res) => {
+    try {
+        const partidos = partidoServicio.obtenerPartidosFuturos(); 
+        
+        res.status(200).send({
+            status: "OK",
+            data: partidos,
+        });
+    } catch (error) {
+        res
+            .status(error?.status || 500)
+            .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
+};
+
 const actualizarConfiguracion = (req, res) => {
     const { body } = req;
     try {
@@ -55,4 +70,5 @@ module.exports = {
     actualizarConfiguracion,
     obtenerJugadores,
     actualizarDatosJugador,
+    obtenerPartidosFuturos,
 };

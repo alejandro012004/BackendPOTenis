@@ -35,6 +35,19 @@ const obtenerConfiguracionPartidoActual = () => {
     };
 };
 
+const obtenerPartidosFuturos = () => {
+    return [
+        { 
+            id: "p001_futuro", 
+            torneo: "Torneo de Prueba", 
+            ronda: "Cuartos", 
+            fecha: new Date().toISOString(),
+            jugador1: { id: "jA", nombre: "Nadal" },
+            jugador2: { id: "jB", nombre: "Federer" },
+        }
+    ];
+};
+
 const guardarResultadoFinal = (datosPartidoFinal) => {
     if (!datosPartidoFinal || !datosPartidoFinal.torneo || !datosPartidoFinal.jugador1 || !datosPartidoFinal.jugador2) {
         throw { status: 400, message: "Datos de partido incompletos. Se requiere el objeto Partido completo." };
@@ -106,4 +119,5 @@ module.exports = {
     actualizarConfiguracionPartido,
     obtenerTodosLosJugadores,
     actualizarJugador,
+    obtenerPartidosFuturos,
 };
