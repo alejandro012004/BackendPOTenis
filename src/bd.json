@@ -1,0 +1,69 @@
+{
+  "jugadores": [
+    {
+      "id": "j1",
+      "nombre": "Carlos Alcaraz",
+      "urlImagen": "https://i.ibb.co/L9H0Y8d/alcaraz.png",
+      "juegos": [0],
+      "puntos": 0,
+      "sets": 0
+    },
+    {
+      "id": "j2",
+      "nombre": "Novak Djokovic",
+      "urlImagen": "https://i.ibb.co/38Xy5f7/djokovic.png",
+      "juegos": [0],
+      "puntos": 0,
+      "sets": 0
+    },
+    {
+      "id": "j3",
+      "nombre": "Rafael Nadal",
+      "urlImagen": "https://i.ibb.co/GVMs1yL/nadal.png",
+      "juegos": [0],
+      "puntos": 0,
+      "sets": 0
+    },
+    {
+      "id": "j4",
+      "nombre": "Jannik Sinner",
+      "urlImagen": "https://i.ibb.co/VMyh02B/sinner.png",
+      "juegos": [0],
+      "puntos": 0,
+      "sets": 0
+    }
+  ],
+  "partidoActual": {
+    "id": "pa_123",
+    "saque": true,
+    "torneo": "Open de Australia",
+    "ronda": "Final",
+    "jugador1": "j1",
+    "jugador2": "j2",
+    "tieBreak": false
+  },
+  "partidosFuturos": [
+    {
+      "id": "pf_456",
+      "torneo": "Roland Garros",
+      "ronda": "Cuartos de Final",
+      "jugador1": "j3",
+      "jugador2": "j4"
+    },
+    {
+      "id": "pf_789",
+      "torneo": "Wimbledon",
+      "ronda": "Semifinal 1",
+      "jugador1": "j1",
+      "jugador2": "j4"
+    },
+    {
+      "id": "pf_101",
+      "torneo": "US Open",
+      "ronda": "Tercera Ronda",
+      "jugador1": "j2",
+      "jugador2": "j3"
+    }
+  ],
+  "partidosJugados": []
+}
