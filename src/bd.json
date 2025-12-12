@@ -37,7 +37,7 @@
     "id": "pa_123",
     "saque": true,
     "torneo": "Open de Australia",
-    "ronda": "Final",
+    "fase": "Final",
     "jugador1": "j1",
     "jugador2": "j2",
     "tieBreak": false
@@ -46,21 +46,21 @@
     {
       "id": "pf_456",
       "torneo": "Roland Garros",
-      "ronda": "Cuartos de Final",
+      "fase": "Cuartos de Final",
       "jugador1": "j3",
       "jugador2": "j4"
     },
     {
       "id": "pf_789",
       "torneo": "Wimbledon",
-      "ronda": "Semifinal 1",
+      "fase": "Semifinal 1",
       "jugador1": "j1",
       "jugador2": "j4"
     },
     {
       "id": "pf_101",
       "torneo": "US Open",
-      "ronda": "Tercera Ronda",
+      "fase": "Tercera Ronda",
       "jugador1": "j2",
       "jugador2": "j3"
     }
