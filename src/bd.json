@@ -3,7 +3,7 @@
     {
       "id": "j1",
       "nombre": "Carlos Alcaraz",
-      "urlImagen": "https://www.atptour.com/es/players/carlos-alcaraz/a0e2/bio",
+      "urlImagen": "https://a.espncdn.com/combiner/i?img=/i/headshots/tennis/players/full/3782.png&w=350&h=254",
       "juegos": [0],
       "puntos": 0,
       "sets": 0
@@ -27,7 +27,7 @@
     {
       "id": "j4",
       "nombre": "Jannik Sinner",
-      "urlImagen": "https://www.atptour.com/es/players/jannik-sinner/s0ag/rankings-breakdown?team=singles",
+      "urlImagen": "https://a.espncdn.com/combiner/i?img=/i/headshots/tennis/players/full/3623.png&w=350&h=254",
       "juegos": [0],
       "puntos": 0,
       "sets": 0
