@@ -102,13 +102,9 @@ const obtenerEstadoGlobal = async () => {
 };
 
 const eliminarPartidoFuturo = async (idPartidoFuturo) => {
-    const snapshot = await partidosFuturosCollection.where('id', '==', idPartidoFuturo).limit(1).get();
-
-    if (snapshot.empty) {
-        return { message: `Partido con ID '${idPartidoFuturo}' no encontrado en partidos futuros para eliminar.` };
-    }
-
-    const docId = snapshot.docs[0].id; 
+    const partidosFuturosCollection = db.collection('partidosFuturos');
+    
+    const docId = idPartidoFuturo; 
     await partidosFuturosCollection.doc(docId).delete();
     
     return { message: `Partido futuro con ID '${idPartidoFuturo}' eliminado correctamente.` };
@@ -116,31 +112,17 @@ const eliminarPartidoFuturo = async (idPartidoFuturo) => {
 
 
 const guardarYLimpiar = async (partidoFinalizado, guardar) => {
-    const { id: idPartidoFuturo } = partidoFinalizado;
-    
-    let mensajeGuardar = "";
-    let idPartidoGuardado = null;
-
-    if (guardar) {
-        const partidoConFecha = {
-            ...partidoFinalizado,
-            fechaFin: new Date().toISOString(),
-            id: uuid(), 
-        };
-        const docRef = await partidosJugadosCollection.add(partidoConFecha);
-        idPartidoGuardado = docRef.id;
-
-        mensajeGuardar = `Partido guardado en el historial con ID: ${idPartidoGuardado}.`;
-    } else {
-        mensajeGuardar = "Partido descartado. No se guardó en el historial.";
-    }
+    // ... (código existente) ...
 
     if (idPartidoFuturo) {
         await eliminarPartidoFuturo(idPartidoFuturo);
         mensajeGuardar += " Partido futuro eliminado.";
     }
 
-    await estadoGlobalDoc.set({}); 
+    // CRÍTICO: Aseguramos que el documento 'config' se limpie.
+    // Lo vaciamos para indicar que no hay un partido activo.
+    await estadoGlobalDoc.set({}); // <-- Asegura que esto está presente
+    // Y si es un subcampo, debes usar .update, pero con .set({}) vacías el documento.
 
     return { 
         message: "Proceso de finalización completado. " + mensajeGuardar, 
