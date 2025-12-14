@@ -93,9 +93,12 @@ const obtenerEstadoGlobal = async () => {
     const partidoActual = partidoActualResponse.message ? null : partidoActualResponse;
 
     return {
-        jugadores,
-        partidoActual, 
-        partidosFuturos,
+        status: "OK",
+        data: {
+            jugadores,
+            partidoActual, 
+            partidosFuturos,
+        }
     };
 };
 
