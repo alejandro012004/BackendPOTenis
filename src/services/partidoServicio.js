@@ -8,7 +8,7 @@ const { v4: uuid } = require("uuid");
 
 // Referencias a las colecciones/documentos en Firestore
 const jugadoresCollection = db.collection('jugadores');
-const partidosFuturosCollection = db.collection('partidos_futuros');
+const partidosFuturosCollection = db.collection('partidosFuturos');
 const estadoGlobalDoc = db.collection('estado_global').doc('config'); // Usaremos un solo documento 'config' para el partido actual
 
 // Eliminamos la lógica de persistencia local (DB, fs, guardarEnPersistencia)
