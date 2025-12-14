@@ -1,9 +1,10 @@
-const { db, partidosJugadosCollection } = require("../db/firestore"); 
-const { v4: uuid } = require("uuid"); 
+const { db } = require("../db/firestore");
+const { v4: uuid } = require("uuid");
 
 const jugadoresCollection = db.collection('jugadores');
-const partidosFuturosCollection = db.collection('partidosFuturos'); 
-const estadoGlobalDoc = db.collection('estado_global').doc('config'); 
+const partidosFuturosCollection = db.collection('partidosFuturos');
+const partidosJugadosCollection = db.collection('partidosJugados');
+const estadoGlobalDoc = db.collection('estado_global').doc('config');
 
 const obtenerConfiguracionPartidoActual = async () => {
     const configSnapshot = await estadoGlobalDoc.get();
@@ -83,7 +84,6 @@ const actualizarJugador = async (idJugador, cambios) => {
     return { id: jugadorActualizadoSnapshot.id, ...jugadorActualizadoSnapshot.data() };
 };
 
-// REVERTIDO A LA ESTRUCTURA QUE NO CAUSA ERROR EN FLUTTER
 const obtenerEstadoGlobal = async () => {
     const [jugadores, partidoActualResponse, partidosFuturos] = await Promise.all([
         obtenerTodosLosJugadores(),
@@ -93,7 +93,6 @@ const obtenerEstadoGlobal = async () => {
 
     const partidoActual = partidoActualResponse.message ? null : partidoActualResponse;
 
-    // ELIMINAMOS EL WRAPPER 'status: "OK", data: {...}'
     return {
         jugadores,
         partidoActual, 
@@ -102,27 +101,34 @@ const obtenerEstadoGlobal = async () => {
 };
 
 const eliminarPartidoFuturo = async (idPartidoFuturo) => {
-    const partidosFuturosCollection = db.collection('partidosFuturos');
-    
     const docId = idPartidoFuturo; 
     await partidosFuturosCollection.doc(docId).delete();
-    
     return { message: `Partido futuro con ID '${idPartidoFuturo}' eliminado correctamente.` };
 };
 
-
 const guardarYLimpiar = async (partidoFinalizado, guardar) => {
-    // ... (código existente) ...
+    let idPartidoGuardado = null;
+    let mensajeGuardar = "";
 
-    if (idPartidoFuturo) {
-        await eliminarPartidoFuturo(idPartidoFuturo);
-        mensajeGuardar += " Partido futuro eliminado.";
+    if (guardar) {
+        const docRef = await partidosJugadosCollection.add({
+            ...partidoFinalizado,
+            fechaRegistro: new Date().toISOString()
+        });
+        idPartidoGuardado = docRef.id;
+        mensajeGuardar = "Partido guardado en historial.";
     }
 
-    // CRÍTICO: Aseguramos que el documento 'config' se limpie.
-    // Lo vaciamos para indicar que no hay un partido activo.
-    await estadoGlobalDoc.set({}); // <-- Asegura que esto está presente
-    // Y si es un subcampo, debes usar .update, pero con .set({}) vacías el documento.
+    if (partidoFinalizado.id) {
+        const futuroRef = partidosFuturosCollection.doc(partidoFinalizado.id);
+        const docFuturo = await futuroRef.get();
+        if (docFuturo.exists) {
+            await futuroRef.delete();
+            mensajeGuardar += " Eliminado de pendientes.";
+        }
+    }
+
+    await estadoGlobalDoc.set({});
 
     return { 
         message: "Proceso de finalización completado. " + mensajeGuardar, 
