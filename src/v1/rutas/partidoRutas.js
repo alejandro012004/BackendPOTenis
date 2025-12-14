@@ -4,6 +4,7 @@ const partidoControlador = require("../../controlador/partidoControlador");
 
 router.get("/actual", partidoControlador.obtenerPartidoActual);
 router.post("/guardar", partidoControlador.guardarPartido);
+router.post("/finalizar", partidoControlador.finalizarPartido); // NUEVA RUTA
 router.get("/proximos", partidoControlador.obtenerPartidosFuturos);
 router.get("/estado_global", partidoControlador.obtenerEstadoGlobal);
 

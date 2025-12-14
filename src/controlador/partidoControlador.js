@@ -1,8 +1,5 @@
-// src/controlador/partidoControlador.js
-
 const partidoServicio = require("../services/partidoServicio");
 
-// Todas las funciones deben ser async para usar 'await'
 const obtenerPartidoActual = async (req, res) => {
     try {
         const config = await partidoServicio.obtenerConfiguracionPartidoActual();
@@ -74,14 +71,35 @@ const obtenerEstadoGlobal = async (req, res) => {
     } catch (error) {
         res.status(error?.status || 500).send({ status: "FALLO", data: { error: error?.message || error } });
     }
-}
+};
+
+const finalizarPartido = async (req, res) => {
+    const { body } = req;
+    const guardar = body.guardar === true; 
+    const partidoFinalizado = body.partido; 
+    
+    if (!partidoFinalizado || !partidoFinalizado.id) {
+         return res.status(400).send({ 
+             status: "FALLO", 
+             data: { error: "Cuerpo de petición incompleto o inválido. Se requiere el objeto partido con 'id'." } 
+         });
+    }
+    
+    try {
+        const resultado = await partidoServicio.guardarYLimpiar(partidoFinalizado, guardar);
+        res.status(200).send({ status: "OK", data: resultado });
+    } catch (error) {
+        res.status(error?.status || 500).send({ status: "FALLO", data: { error: error?.message || error } });
+    }
+};
 
 module.exports = {
     obtenerPartidoActual,
     guardarPartido,
-    obtenerPartidosFuturos,
     actualizarConfiguracion,
     obtenerJugadores,
     actualizarDatosJugador,
+    obtenerPartidosFuturos,
     obtenerEstadoGlobal,
+    finalizarPartido, // Exportación del nuevo controlador
 };
